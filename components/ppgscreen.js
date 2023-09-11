@@ -6,9 +6,10 @@ export default function ppgscreen({ route }) {
 
   return (
     <View style={styles.container}>
-    <Text style={styles.text}>Name: {playername}</Text>
-    <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
-      
+      <Text style={styles.text}>Name: {playername}</Text>
+      <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
+      <Button title="Input More Data" />
+
     </View>
   );
 }
