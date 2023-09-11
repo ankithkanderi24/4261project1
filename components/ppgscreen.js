@@ -1,14 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ppgscreen({ route }) {
   const { playername, ppg } = route.params;
+  const navigation = useNavigation();
+
+  const handleGoBack = () => {
+    navigation.navigate('home'); 
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Name: {playername}</Text>
       <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
-      <Button title="Input More Data" />
+      <Button
+      title="Go Back to Home"
+      onPress={handleGoBack} 
+    />
 
     </View>
   );

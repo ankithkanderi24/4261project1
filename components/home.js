@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect} from '@react-navigation/native';
 import {doc, setDoc, getDoc, collection, addDoc, getDocs} from "firebase/firestore"; 
 import {db} from './config';
 
@@ -36,7 +36,7 @@ export default function Home() {
         const pointsCollectionRef = collection(playerDocRef, "points");
       
         try {
-          setCalculatingPPG(true); // Indicate that calculation is in progress
+          setCalculatingPPG(true); 
           const docs = await getDocs(pointsCollectionRef);
       
           let totalPoints = 0;
@@ -66,6 +66,15 @@ export default function Home() {
           navigation.navigate('ppgscreen', { playername, ppg });
         }
       }, [dataSubmitted, ppg]);
+
+      useFocusEffect(
+        React.useCallback(() => {
+          setName('');
+          setPoints('');
+          setDataSubmitted(false);
+          setppg(null);
+        }, [])
+      );
       
     
     return (
