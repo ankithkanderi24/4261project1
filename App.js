@@ -1,23 +1,59 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect} from 'react'; 
 import { View, TextInput, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc, collection, addDoc, getDocs} from "firebase/firestore"; 
 import {db} from './components/config';
 
 export default function App() {
   const [playername, setName] = useState('');
   const [points, setPoints] = useState('');
   const [dataSubmitted, setDataSubmitted] = useState(false);
+  const [ppg, setppg] = useState(null);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    if (dataSubmitted) {
+      calculatePPG();
+    }
+  }, [dataSubmitted]);
+
+  const handleSubmit = async () => {
     setDataSubmitted(true);
-    create();
+    await create();
   }
 
-  function create () {
-    setDoc(doc(db, "userppg", "ppg"), {
-      name: playername,
-      points: points
-    });
+  async function create () {  
+    const playerDocRef = doc(db, "userppg", playername);
+    const pointsCollectionRef = collection(playerDocRef, "points");
+
+    try {
+      await addDoc(pointsCollectionRef, {
+        value: Number(points)
+      });
+    } catch (error) {
+      console.error("Error adding point entry:", error);
+    }
+  }
+
+  async function calculatePPG() {
+    const playerDocRef = doc(db, "userppg", playername);
+    const pointsCollectionRef = collection(playerDocRef, "points");
+
+    try {
+      const docs = await getDocs(pointsCollectionRef);
+
+      let totalPoints = 0;
+      let numGames = 0;
+
+      docs.forEach((doc) => {
+        const pointEntry = doc.data();
+        totalPoints += pointEntry.value;
+        numGames++;
+      });
+
+      const calculatedPPG = totalPoints / numGames;
+      setppg(calculatedPPG);
+    } catch (error) {
+      console.error("Error calculating PPG:", error);
+    }
   }
   
   return (
@@ -35,10 +71,10 @@ export default function App() {
         placeholder="PPG"
       />
       <Button title="Submit Data" onPress = {handleSubmit}/>
-      {dataSubmitted && (
+      {dataSubmitted && ppg !== null && (
         <View>
-          <Text style={styles.resultText}>Name: {playername}</Text>
-          <Text style={styles.resultText}>PPG: {points}</Text>
+        <Text style={styles.resultText}>Name: {playername}</Text>
+        <Text style={styles.resultText}>PPG: {ppg.toFixed(2)}</Text>
         </View>
       )}
     </View>
