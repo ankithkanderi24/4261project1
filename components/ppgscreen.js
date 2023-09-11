@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function PPGScreen({ route }) {
+export default function ppgscreen({ route }) {
   const { playername, ppg } = route.params;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Name: {playername}</Text>
-      <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
+    <Text style={styles.text}>Name: {playername}</Text>
+    <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
+      
     </View>
   );
 }
