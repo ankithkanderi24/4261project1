@@ -1,13 +1,23 @@
 import React, { useState } from 'react'; 
 import { View, TextInput, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { doc, setDoc } from "firebase/firestore"; 
+import {db} from './components/config';
 
 export default function App() {
   const [playername, setName] = useState('');
-  const [ppg, setPpg] = useState('');
+  const [points, setPoints] = useState('');
   const [dataSubmitted, setDataSubmitted] = useState(false);
 
   const handleSubmit = () => {
     setDataSubmitted(true);
+    create();
+  }
+
+  function create () {
+    setDoc(doc(db, "userppg", "ppg"), {
+      name: playername,
+      points: points
+    });
   }
   
   return (
@@ -20,15 +30,15 @@ export default function App() {
       />
       <Text style = {styles.text}>Type how many points you scored below!</Text>
       <TextInput style = {styles.textinput}
-        value={ppg}
-        onChangeText={text => setPpg(text)}
+        value={points}
+        onChangeText={text => setPoints(text)}
         placeholder="PPG"
       />
       <Button title="Submit Data" onPress = {handleSubmit}/>
       {dataSubmitted && (
         <View>
           <Text style={styles.resultText}>Name: {playername}</Text>
-          <Text style={styles.resultText}>PPG: {ppg}</Text>
+          <Text style={styles.resultText}>PPG: {points}</Text>
         </View>
       )}
     </View>
