@@ -7,3 +7,5 @@
 6. At this point, your terminal should display a QR code.
 7. Download the Expo Go app on Android or IOS. On Android, use the Expo Go app to scan the QR code from your terminal to open your project. On iOS, use the built-in QR code scanner of the default iOS Camera app.
 8. Your app should now display in the Expo Go App!
+
+For more info on the React Native Expo Environment: https://reactnative.dev/docs/environment-setup.
