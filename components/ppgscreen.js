@@ -12,8 +12,7 @@ export default function ppgscreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Name: {playername}</Text>
-      <Text style={styles.text}>PPG: {ppg.toFixed(2)}</Text>
+      <Text style={styles.text}>Hey {playername}, you are averaging {ppg.toFixed(2)} PPG!</Text>
       <Button
       title="Go Back to Home"
       onPress={handleGoBack} 
@@ -32,5 +31,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center', 
+    textAlignVertical: 'center', 
   },
 });

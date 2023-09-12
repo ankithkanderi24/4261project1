@@ -80,13 +80,13 @@ export default function Home() {
     return (
       <View style={styles.container}>
         <Text style = {styles.text}>Type your name below!</Text>
-        <TextInput style = {styles.textinput}
+        <TextInput style = {styles.input}
           value={playername}
           onChangeText={text => setName(text)}
           placeholder="Name"
         />
         <Text style = {styles.text}>Type how many points you scored below!</Text>
-        <TextInput style = {styles.textinput}
+        <TextInput style = {styles.input}
           value={points}
           onChangeText={text => setPoints(text)}
           placeholder="PPG"
@@ -102,19 +102,30 @@ export default function Home() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#f0f0f0',
       alignItems: 'center',
       justifyContent: 'center',
     },
     text: {
-      fontSize: 20,
+      fontSize: 24,
       fontWeight: 'bold',
       color: 'blue',
+      marginBottom: 20,
     },
-    textinput: {
-      fontSize: 20,
+    input: {
+      width: '80%',
+      fontSize: 18,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderColor: 'blue',
+      borderWidth: 1,
+      marginBottom: 20,
+      borderRadius: 5,
     },
-    resultText: {
-      fontSize: 20
-    }
   });
+  
+  
+  
+  
+  
+  
